@@ -1,0 +1,70 @@
+  /* Anchor (link) styling */
+  .custom-sidebar-brand {
+      text-decoration: none;
+      /* Removes underline from the link */
+      color: inherit;
+      /* Ensures text color inherits the set styles */
+      display: flex;
+      /* Enables flexbox for layout */
+      align-items: center;
+      /* Vertically aligns logo and text */
+  }
+
+
+  /* Text container */
+  .sidebar-brand-text {
+      display: flex;
+      flex-direction: column;
+      /* Stack title and subtitle */
+      margin-left: 0px;
+  }
+
+  /* Title styling for "RMS" */
+  .sidebar-brand-title {
+      display: flex;
+      /* Enables flexbox for centering */
+      align-items: center;
+      /* Centers vertically */
+      justify-content: center;
+      /* Centers horizontally */
+      font-size: 24px;
+      /* Larger font size for emphasis */
+      font-weight: bold;
+      /* Bold text for prominence */
+      color: #C08C31;
+      /* Gold branding color */
+      font-family: "Times New Roman", serif;
+      /* Elegant font style */
+      margin: 0;
+      /* Remove any unwanted margins */
+      text-align: center;
+      /* Ensures text alignment is centered */
+      height: 100%;
+      /* Ensures it fills the available space vertically */
+      width: 100%;
+      /* Ensures it fills the available space horizontally */
+      line-height: 1.2;
+      /* Adjust for better spacing */
+  }
+
+  .sidebar-narrow .sidebar-brand-title,
+  .sidebar-narrow-unfoldable:not(:hover) .sidebar-brand-title {
+      display: none;
+  }
+
+  /* Subtitle styling for "Retail Management System" */
+  .sidebar-brand-subtitle {
+      font-size: 12px;
+      /* Smaller than title */
+      color: #C08C31;
+      /* Same gold color */
+      font-family: "Times New Roman", serif;
+      /* Consistent font family */
+      margin: 0;
+      font-weight: normal;
+  }
+
+  .sidebar-narrow .sidebar-brand-subtitle,
+  .sidebar-narrow-unfoldable:not(:hover) .sidebar-brand-subtitle {
+      display: none;
+  }
