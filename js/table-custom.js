@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
             autoWidth: true,  // Allow automatic column width adjustment
             responsive: true, // Enable responsive design for table
             scrollX: true,   // Enable horizontal scrolling
-            scrollY: 750,    // Set a specific vertical scroll height
+            scrollY: 550,    // Set a specific vertical scroll height
             paging: false,    // Enable pagination
             scrollCollapse: true,  // Allow scrolling to collapse when fewer records are displayed
             searching: true,
