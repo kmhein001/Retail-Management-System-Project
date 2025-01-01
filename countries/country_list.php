@@ -107,98 +107,124 @@ include_once '../partials/header.php';
                             $sql = "SELECT * FROM NewCountries";
                             $result = $conn->query($sql);
                             ?>
-                            <table id="General_Auto_Table" class="table table-striped table-bordered border-warning my-4">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center" id="checkboxColumn"><input type="checkbox" id="selectAllCheckbox"></th>
-                                        <th class="text-center">Id</th>
-                                        <th class="text-center">Country Name</th>
-                                        <th class="text-center">Countries Iso Code</th>
-                                        <th class="text-center">Flag Image</th>
-                                        <th class="text-center">Countries Isd Code</th>
-                                        <th class="text-center">Time Zone</th>
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center" id="actionsColumn">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    while ($row = $result->fetch_assoc()) {
-                                    ?>
+                            <form action="delete_multiple.php" method="POST" id="deleteForm">
+                                <table id="General_Auto_Table" class="table table-striped table-bordered border-warning my-4">
+                                    <thead>
                                         <tr>
-                                            <td class="align-middle text-center">
-                                                <input type="checkbox" class="rowCheckbox">
-                                            </td>
-                                            <td class="align-middle text-center"><?= $row["CountryID"] ?></td>
-                                            <td class="align-middle text-center"><?= $row["CountryName"] ?></td>
-                                            <td class="align-middle text-center"><?= $row["Countries_Iso_Code"] ?></td>
-                                            <td class="align-middle text-center">
-                                                <?php
-                                                // Get the file extension
-                                                $file_extension = strtolower(pathinfo($row["Flag_Image"], PATHINFO_EXTENSION));
-
-                                                // Determine the correct directory based on the file extension
-                                                if ($file_extension === 'svg') {
-                                                    $image_path = "../assets/img/flag/svg/" . $row["Flag_Image"];
-                                                } elseif ($file_extension === 'png') {
-                                                    $image_path = "../assets/img/flag/png/" . $row["Flag_Image"];
-                                                } else {
-                                                    // Fallback image or error handling
-                                                    $image_path = "../assets/img/flag/default.png"; // Use a default image if the type is unknown
-                                                }
-                                                ?>
-                                                <img src="<?= $image_path ?>"
-                                                    alt="<?= isset($row['CountryName']) && !empty($row['CountryName']) ? $row['CountryName'] : $row['Flag_Image'] ?>"
-                                                    style="max-width: 100%; height: auto;" />
-                                            </td>
-                                            <td class="align-middle text-center"><?= $row["Countries_Isd_Code"] ?></td>
-                                            <td class="align-middle text-center"><?= $row["Time_Zone"] ?></td>
-                                            <td class="align-middle text-center">
-                                                <div class="form-check form-switch d-flex justify-content-center align-items-center">
-                                                    <!-- Toggle the checkbox value dynamically based on the current status -->
-                                                    <input class="form-check-input status-toggle"
-                                                        type="checkbox" data-country-id="<?= $row["CountryID"] ?>"
-                                                        <?= ($row["Status"] == 'Active') ? 'checked' : '' ?>>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <div class="btn-group d-flex flex-column flex-sm-row justify-content-center">
-                                                    <!-- Magnifying Glass Icon (View) -->
-                                                    <a class="btn btn-outline-success me-2 mb-2 mb-sm-0" href="#">
-                                                        <svg class="icon" style="width:30px;height:30px;">
-                                                            <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
-                                                        </svg>
-                                                    </a>
-                                                    <!-- Edit Icon -->
-                                                    <a class="btn btn-outline-info me-2 mb-2 mb-sm-0" href="<?= $base_url ?>/countries/country_edit.php">
-                                                        <svg class="icon" style="width:30px;height:30px;">
-                                                            <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-description"></use>
-                                                        </svg>
-                                                    </a>
-                                                    <!-- Delete Icon -->
-                                                    <a class="btn btn-outline-danger mb-2 mb-sm-0" href="<?= $base_url ?>/countries/country_delete.php">
-                                                        <svg class="icon" style="width:30px;height:30px;">
-                                                            <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                                                        </svg>
-                                                    </a>
-                                                </div>
-                                            </td>
-
+                                            <th class="text-center" id="checkboxColumn"><input type="checkbox" id="selectAllCheckbox"></th>
+                                            <th class="text-center">Id</th>
+                                            <th class="text-center">Country Name</th>
+                                            <th class="text-center">Countries Iso Code</th>
+                                            <th class="text-center">Flag Image</th>
+                                            <th class="text-center">Countries Isd Code</th>
+                                            <th class="text-center">Time Zone</th>
+                                            <th class="text-center">Status</th>
+                                            <th class="text-center" id="actionsColumn">Actions</th>
                                         </tr>
-                                    <?php
-                                    }
-                                    ?>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        while ($row = $result->fetch_assoc()) {
+                                        ?>
+                                            <tr>
+                                                <td class="align-middle text-center">
+                                                    <input type="checkbox" name="selected_ids[]" value="<?= $row["CountryID"] ?>" class="rowCheckbox">
+                                                </td>
+                                                <td class="align-middle text-center"><?= $row["CountryID"] ?></td>
+                                                <td class="align-middle text-center"><?= $row["CountryName"] ?></td>
+                                                <td class="align-middle text-center"><?= $row["Iso_Code"] ?></td>
+                                                <td class="align-middle text-center">
+                                                    <?php
+                                                    // Get the file extension
+                                                    $file_extension = strtolower(pathinfo($row["Flag_Image"], PATHINFO_EXTENSION));
 
-                                </tbody>
-                                <script src="ajax_update_country.js"></script>
-                            </table>
-                            <div id="General_Auto_Table_info" class="custom-info d-flex justify-content-start mt-1">
-                                <button class="btn btn-primary badge fs-5 py-2 px-3 w-auto">
-                                    <!-- Pagination info will be updated here -->
-                                    Showing 1 to 10 of 100 entries
-                                </button>
-                            </div>
+                                                    // Determine the correct directory based on the file extension
+                                                    if ($file_extension === 'svg') {
+                                                        $image_path = "../assets/img/flag/svg/" . $row["Flag_Image"];
+                                                    } elseif ($file_extension === 'png') {
+                                                        $image_path = "../assets/img/flag/png/" . $row["Flag_Image"];
+                                                    } else {
+                                                        // Fallback image or error handling
+                                                        $image_path = "../assets/img/flag/default.png"; // Use a default image if the type is unknown
+                                                    }
+                                                    ?>
+                                                    <img src="<?= $image_path ?>"
+                                                        alt="<?= isset($row['CountryName']) && !empty($row['CountryName']) ? $row['CountryName'] : $row['Flag_Image'] ?>"
+                                                        style="max-width: 100%; height: auto;" />
+                                                </td>
+                                                <td class="align-middle text-center"><?= $row["Isd_Code"] ?></td>
+                                                <td class="align-middle text-center"><?= $row["Time_Zone"] ?></td>
+                                                <td class="align-middle text-center">
+                                                    <div class="form-check form-switch d-flex justify-content-center align-items-center">
+                                                        <!-- Toggle the checkbox value dynamically based on the current status -->
+                                                        <input class="form-check-input status-toggle"
+                                                            type="checkbox" data-country-id="<?= $row["CountryID"] ?>"
+                                                            <?= ($row["Status"] == 'Active') ? 'checked' : '' ?>>
+                                                    </div>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <div class="btn-group d-flex flex-column flex-sm-row justify-content-center">
+                                                        <!-- Magnifying Glass Icon (View) -->
+                                                        <a class="btn btn-outline-success me-2 mb-2 mb-sm-0" href="#">
+                                                            <svg class="icon" style="width:30px;height:30px;">
+                                                                <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass"></use>
+                                                            </svg>
+                                                        </a>
+                                                        <!-- Edit Icon -->
+                                                        <a class="btn btn-outline-info me-2 mb-2 mb-sm-0" href="<?= $base_url ?>/countries/country_edit.php?id=<?= $row['CountryID'] ?>">
+                                                            <svg class="icon" style="width:30px;height:30px;">
+                                                                <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-description"></use>
+                                                            </svg>
+                                                        </a>
+                                                        <!-- Delete Icon -->
+                                                        <a href="country_delete.php?id=' . urlencode($country['CountryID']) . '" class="btn btn-outline-danger mb-2 mb-sm-0" onclick="return confirm(\'Are you sure you want to delete this country?\');">
+                                                            <svg class="icon" style="width:30px;height:30px;">
+                                                                <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                    <script src="ajax_update_country.js"></script>
+                                </table>
+                                <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mt-3">
+                                    <!-- Pagination Info -->
+                                    <div class="mb-2 mb-md-0">
+                                        <div id="General_Auto_Table_info" class="custom-info">
+                                            <button class="btn btn-primary badge fs-5 py-2 px-3 w-auto">
+                                                Showing 1 to 10 of 100 entries
+                                            </button>
+                                        </div>
+                                    </div>
 
+                                    <!-- Success/Error Messages -->
+                                    <?php if (isset($_GET['success']) || isset($_GET['error'])) : ?>
+                                        <div class="mb-2 mb-md-0">
+                                            <?php
+                                            if (isset($_GET['success'])) {
+                                                echo "<div class='alert alert-success'>" . htmlspecialchars($_GET['success']) . "</div>";
+                                            }
+                                            if (isset($_GET['error'])) {
+                                                echo "<div class='alert alert-danger'>" . htmlspecialchars($_GET['error']) . "</div>";
+                                            }
+                                            ?>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <!-- Delete Selected Countries Button -->
+                                    <div>
+                                        <button type="submit" name="delete_selected" class="btn btn-danger custom-delete-btn">
+                                            <svg class="icon" style="width: 40px; height: 40px;">
+                                                <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
                     </div>

@@ -93,7 +93,7 @@ include_once '../partials/header.php';
                     <div class="row g-4 my-4">
                         <div class="col-12">
                             <div class="mb-3">
-                                <label for="flag_image" class="form-label fw-semibold fs-4">Product Image</label>
+                                <label for="flag_image" class="form-label fw-semibold fs-4">Flag Image</label>
                                 <div class="image-upload">
                                     <!-- Add name="flag_image" to the input field -->
                                     <input type="file" id="flag_image" name="flag_image" accept="image/png, image/svg+xml" class="form-control fs-">
