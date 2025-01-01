@@ -1,10 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     try {
-        // Get the index for the checkbox and actions columns dynamically
-        const checkboxColumnIndex = $('#checkboxColumn').index();
-        const actionsColumnIndex = $('#actionsColumn').index();
-
-        // Initialize DataTable with export buttons and configurations
+      
         const table = $('#General_Auto_Table').DataTable({
             dom: "Brtip",
             buttons: [
@@ -24,9 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
             ordering: true,
             info: false, // Enable the DataTable info feature
             columnDefs: [
-                { width: '5%', targets: checkboxColumnIndex }, // Set fixed width for checkbox column
-                { targets: checkboxColumnIndex, orderable: false }, // Disable sorting for checkbox column
-                { targets: actionsColumnIndex, orderable: false }, // Disable sorting for actions column
+                { width: '5%', targets: 0 }, // Set fixed width for checkbox column
+                { targets: 0, orderable: false },
+                { targets: -1, orderable: false },
                 { targets: '_all', orderable: true } // Enable sorting for all other columns
             ],
         });
