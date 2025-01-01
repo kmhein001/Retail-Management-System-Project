@@ -5,7 +5,7 @@ include_once '../partials/header.php';
 </li>
 <li class="breadcrumb-item"><a href="javascript:void(0);" data-coreui-i18n="Place">Product</a>
 </li>
-<li class="breadcrumb-item active"><a href="<?= $base_url ?>/subcategory/subcategory_list.php" data-coreui-i18n="Sub Category List">Sub Category list</a>
+<li class="breadcrumb-item active"><a href="subcategory_list.php" data-coreui-i18n="Sub Category List">Sub Category list</a>
 </li>
 </ol>
 </nav>
@@ -28,7 +28,7 @@ include_once '../partials/header.php';
                     <div class="d-flex flex-wrap align-items-center justify-content-between">
                         <div class="col-md-6 col-12 mb-3 mb-md-0 d-flex justify-content-start">
                             <a class="btn btn-primary d-flex align-items-center justify-content-center align-middle"
-                                style="width: 250px; height: 60px; font-size: 18px;" href="<?= $base_url ?>/subcategory/subcategory_add.php">
+                                style="width: 250px; height: 60px; font-size: 18px;" href="subcategory_add.php">
                                 <svg class="icon me-4" style="width: 24px; height: 24px;">
                                     <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-plus"></use>
                                 </svg>

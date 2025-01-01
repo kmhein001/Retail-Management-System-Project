@@ -65,7 +65,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "Error uploading the file. Error code: " . $_FILES['ImageFile']['error'];
                 break;
         }
+        echo "<pre>";
+print_r($_FILES);
+echo "</pre>";
         exit();
+        
     }
 
     // Prepare the SQL statement
