@@ -177,7 +177,7 @@ include_once '../partials/header.php';
                                                             </svg>
                                                         </a>
                                                         <!-- Delete Icon -->
-                                                        <a href="country_delete.php?id=' . urlencode($country['CountryID']) . '" class="btn btn-outline-danger mb-2 mb-sm-0" onclick="return confirm(\'Are you sure you want to delete this country?\');">
+                                                        <a href="country_delete.php?id=<?= $row['CountryID'] ?>" class="btn btn-outline-danger mb-2 mb-sm-0" onclick="return confirm(\'Are you sure you want to delete this country?\');">
                                                             <svg class="icon" style="width:30px;height:30px;">
                                                                 <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
                                                             </svg>
@@ -189,7 +189,7 @@ include_once '../partials/header.php';
                                         }
                                         ?>
                                     </tbody>
-                                    <script src="ajax_update_country.js"></script>
+                                    <script src="ajax_update_status.js"></script>
                                 </table>
                                 <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mt-3">
                                     <!-- Pagination Info -->
@@ -201,20 +201,17 @@ include_once '../partials/header.php';
                                         </div>
                                     </div>
 
-                                    <!-- Success/Error Messages -->
-                                    <?php if (isset($_GET['success']) || isset($_GET['error'])) : ?>
-                                        <div class="mb-2 mb-md-0">
-                                            <?php
-                                            if (isset($_GET['success'])) {
-                                                echo "<div class='alert alert-success'>" . htmlspecialchars($_GET['success']) . "</div>";
-                                            }
-                                            if (isset($_GET['error'])) {
-                                                echo "<div class='alert alert-danger'>" . htmlspecialchars($_GET['error']) . "</div>";
-                                            }
-                                            ?>
-                                        </div>
-                                    <?php endif; ?>
-
+                                    <!-- Dropdown and Bulk Update Button -->
+                                    <div class="d-flex align-items-center gap-3">
+                                        <select id="bulkStatusSelect" class="form-select" style="width: auto;">
+                                            <option value="">Select Status</option>
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                        </select>
+                                        <button id="bulkUpdateButton" class="btn btn-primary">
+                                            Update Status
+                                        </button>
+                                    </div>
                                     <!-- Delete Selected Countries Button -->
                                     <div>
                                         <button type="submit" name="delete_selected" class="btn btn-danger custom-delete-btn">

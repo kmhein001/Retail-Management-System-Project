@@ -5,7 +5,8 @@ error_reporting(E_ALL);
 
 include_once '../config/connect_db.php';
 
-if (isset($_GET['id'])) {
+
+if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
     $id = (int)$_GET['id']; // Sanitize the ID
 
     // Fetch the image filename from the database
@@ -46,12 +47,14 @@ if (isset($_GET['id'])) {
             header("Location: country_list.php?success=Country deleted successfully.");
             exit();
         } else {
-            die("Error deleting record: " . $delete_stmt->error);
+            die("Error deleting record: ```php
+" . $delete_stmt->error);
         }
 
         $delete_stmt->close();
     } else {
-        die("Error: Record not found for ID: " . $id);
+        header("Location: country_list.php?error=Record not found for ID: " . $id);
+        exit();
     }
 
     $stmt->close();

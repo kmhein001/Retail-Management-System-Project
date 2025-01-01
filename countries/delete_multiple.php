@@ -1,6 +1,7 @@
 <?php
 include_once '../config/connect_db.php';
 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_selected'])) {
     if (!empty($_POST['selected_ids'])) {
         $selected_ids = $_POST['selected_ids'];
