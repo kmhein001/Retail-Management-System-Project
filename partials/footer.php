@@ -59,6 +59,10 @@
 <script src="../js/config.js"></script>
 <script src="../js/color-modes.js"></script>
 <script src="../js/main.js"></script>
+<!-- Barcode -->
+<script src="../js/JsBarcode.all.min.js"></script>
+
+
 
 
 <script>
