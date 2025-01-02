@@ -136,7 +136,7 @@ include_once '../partials/header.php';
                                     <option value="">Select Category</option>
                                     <?php foreach ($categories as $category): ?>
                                         <option value="<?= htmlspecialchars($category['CategoryID']) ?>"
-                                            <?= isset($row['CategoryName']) && $row['CategoryName'] == $category['CategoryName'] ? 'selected' : '' ?>>
+                                            <?= isset($row['CategoryID']) && $row['CategoryID'] == $category['CategoryID'] ? 'selected' : '' ?>>
                                             <?= htmlspecialchars($category['CategoryName']) ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -146,7 +146,6 @@ include_once '../partials/header.php';
                         <?php
                         $sql_subcategories = "SELECT SubcategoryID, SubcategoryName FROM Subcategory ORDER BY SubcategoryName";
                         $result_subcategories = $conn->query($sql_subcategories);
-
                         if ($result_subcategories->num_rows > 0) {
                             $subcategories = $result_subcategories->fetch_all(MYSQLI_ASSOC); // Store all subcategories in an array
                         } else {
@@ -249,7 +248,7 @@ include_once '../partials/header.php';
                                     <img src="<?= $image_path ?>"
                                         alt="<?= htmlspecialchars($row['ProductName'] ?? 'ImageFile') ?>"
                                         style="width:300px; height: 300px;" />
-
+                             
                                     <input type="file" id="img" name="img"
                                         accept="image/png, image/svg+xml" class="form-control mt-4">
 
