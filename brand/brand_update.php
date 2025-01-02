@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (in_array($extension, $allowed_types)) {
             // Use the original file name
             $original_name = basename($file['name']);
-            $upload_path = ($extension === 'svg') ? '../assets/img/category/svg/' : '../assets/img/category/png/';
+            $upload_path = ($extension === 'svg') ? '../assets/img/brand/svg/' : '../assets/img/brand/png/';
             $destination = $upload_path . $original_name;
 
             // Check if the file already exists
