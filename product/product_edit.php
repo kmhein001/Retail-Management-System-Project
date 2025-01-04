@@ -44,13 +44,11 @@ include_once '../partials/header.php';
             <div class="card-body">
                 <?php
 
-                // Check if ID is provided in the URL
                 if (!isset($_GET['id'])) {
                     header("Location: product_list.php");
                     exit();
                 }
                 $id = (int)$_GET['id'];
-
 
                 $stmt = $conn->prepare("SELECT * FROM Products WHERE ProductID = ?");
                 $stmt->bind_param("i", $id);
@@ -92,98 +90,93 @@ include_once '../partials/header.php';
                                 <input type="text" class="form-control" style="height:60px" id="sku" name="sku" placeholder="Enter SKU" value="<?= htmlspecialchars($row['SKU'] ?? '') ?>" required>
                             </div>
                         </div>
-                        <?php
-                        $sql_brands = "SELECT BrandID, BrandName FROM Brands ORDER BY BrandName";
-                        $result_brands = $conn->query($sql_brands);
-
-                        if ($result_brands->num_rows > 0) {
-                            $brands = $result_brands->fetch_all(MYSQLI_ASSOC);
-                        } else {
-                            $brands = [];
-                        }
-                        ?>
                         <div class="col-lg-6 col-md-6 col-12 my-4">
                             <div class="mb-3">
                                 <label for="bname" class="form-label fw-bold fs-4">Brand Name</label>
                                 <select class="form-control" style="height:60px" id="bname" name="bname">
                                     <option value="">Select Brand</option>
-                                    <?php foreach ($brands as $brand): ?>
-                                        <option value="<?= htmlspecialchars($brand['BrandID']) ?>"
-                                            <?= isset($row['BrandID']) && $row['BrandID'] == $brand['BrandID'] ? 'selected' : '' ?>>
-                                            <?= htmlspecialchars($brand['BrandName']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
+                                    <?php
+                                    // Fetch brands securely
+                                    $stmt = $conn->prepare("SELECT BrandID, BrandName FROM Brands ORDER BY BrandName ASC");
+                                    if ($stmt) {
+                                        $stmt->execute();
+                                        $result_brands = $stmt->get_result();
+                                        while ($brand = $result_brands->fetch_assoc()) {
+                                            $selected = ($row['BrandName'] === $brand['BrandName']) ? 'selected' : '';
+                                            echo '<option value="' . htmlspecialchars($brand['BrandID']) . '" ' . $selected . '>' . htmlspecialchars($brand['BrandName']) . '</option>';
+                                        }
+                                        $stmt->close();
+                                    } else {
+                                        echo '<option value="">Error fetching brands</option>';
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
-                        <?php
-                        $sql_category = "SELECT CategoryID, CategoryName FROM Category ORDER BY Category";
-                        $result_category = $conn->query($sql_category);
-
-                        if ($result_category->num_rows > 0) {
-                            $categories = $result_category->fetch_all(MYSQLI_ASSOC);
-                        } else {
-                            $categories = [];
-
-                            var_dump($categories);
-                            var_dump($row);
-                        }
-                        ?>
                         <div class="col-lg-6 col-md-6 col-12 my-4">
                             <div class="mb-3">
                                 <label for="cname" class="form-label fw-bold fs-4">Category Name</label>
                                 <select class="form-control" style="height:60px" id="cname" name="cname">
                                     <option value="">Select Category</option>
-                                    <?php foreach ($categories as $category): ?>
-                                        <option value="<?= htmlspecialchars($category['CategoryID']) ?>"
-                                            <?= isset($row['CategoryID']) && $row['CategoryID'] == $category['CategoryID'] ? 'selected' : '' ?>>
-                                            <?= htmlspecialchars($category['CategoryName']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
+                                    <?php
+                                    // Fetch categories securely
+                                    $stmt = $conn->prepare("SELECT CategoryID, CategoryName FROM Category ORDER BY CategoryName ASC");
+                                    if ($stmt) {
+                                        $stmt->execute();
+                                        $result_category = $stmt->get_result();
+                                        while ($category = $result_category->fetch_assoc()) {
+                                            $selected = ($row['CategoryName'] === $category['CategoryName']) ? 'selected' : '';
+                                            echo '<option value="' . htmlspecialchars($category['CategoryID']) . '" ' . $selected . '>' . htmlspecialchars($category['CategoryName']) . '</option>';
+                                        }
+                                        $stmt->close();
+                                    } else {
+                                        echo '<option value="">Error fetching categories</option>';
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
-                        <?php
-                        $sql_subcategories = "SELECT SubcategoryID, SubcategoryName FROM Subcategory ORDER BY SubcategoryName";
-                        $result_subcategories = $conn->query($sql_subcategories);
-                        if ($result_subcategories->num_rows > 0) {
-                            $subcategories = $result_subcategories->fetch_all(MYSQLI_ASSOC); // Store all subcategories in an array
-                        } else {
-                            $subcategories = [];
-                            var_dump($subcategories);
-                            var_dump($row);
-                        }
-                        ?>
                         <div class="col-lg-6 col-md-6 col-12 my-4">
                             <div class="mb-3">
                                 <label for="sname" class="form-label fw-bold fs-4">Subcategory Name</label>
                                 <select class="form-control" style="height:60px" id="sname" name="sname">
                                     <option value="">Select Subcategory</option>
-                                    <?php foreach ($subcategories as $subcategory): ?>
-                                        <option value="<?= htmlspecialchars($subcategory['SubcategoryID']) ?>"
-                                            <?= isset($row['SubcategoryID']) && $row['SubcategoryID'] == $subcategory['SubcategoryID'] ? 'selected' : '' ?>>
-                                            <?= htmlspecialchars($subcategory['SubcategoryName']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
+                                    <?php
+                                    // Fetch subcategories securely
+                                    $stmt = $conn->prepare("SELECT SubcategoryID, SubcategoryName FROM Subcategory ORDER BY SubcategoryName ASC");
+                                    if ($stmt) {
+                                        $stmt->execute();
+                                        $result_subcategories = $stmt->get_result();
+                                        while ($subcategory = $result_subcategories->fetch_assoc()) {
+                                            $selected = ($row['SubcategoryName'] === $subcategory['SubcategoryName']) ? 'selected' : '';
+                                            echo '<option value="' . htmlspecialchars($subcategory['SubcategoryID']) . '" ' . $selected . '>' . htmlspecialchars($subcategory['SubcategoryName']) . '</option>';
+                                        }
+                                        $stmt->close();
+                                    } else {
+                                        echo '<option value="">Error fetching subcategories</option>';
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-12 my-4">
                             <div class="mb-3">
-                                <label for="price" class="form-label fw-bold fs-4">Price</label>
-                                <input type="text" class="form-control" style="height:60px" row-5 id="price" name="price" placeholder="Enter Price MMK" value="<?= htmlspecialchars($row['Price'] ?? '') ?>">
+                                <label for="price" class="form-label fw-bold fs-4">Price  </label>
+                                    <div class="d-flex align-items-center">
+                                        <input
+                                            type="number"
+                                            step="0.01"
+                                            class="form-control me-2"
+                                            id="price"
+                                            name="price"
+                                            placeholder="Enter Price"
+                                            value="<?= htmlspecialchars($row['Price'] ?? '') ?>"
+                                            required
+                                            style="flex: 1; text-align: center; height:60px;">
+                                        <div class="fs-4"style="color: #6c757d;">MMK</div>
+                                    </div>
                             </div>
                         </div>
-                        <?php
-                        $sql_units = "SELECT UnitID, ShortWord FROM MeasurementUnits ORDER BY ShortWord";
-                        $result_units = $conn->query($sql_units);
-
-                        if ($result_units->num_rows > 0) {
-                            $units = $result_units->fetch_all(MYSQLI_ASSOC); // Store all units in an array
-                        } else {
-                            $units = [];
-                        }
-                        ?>
                         <div class="col-lg-6 col-md-6 col-12 my-4 d-flex">
                             <div class="col-8 mb-3 me-3">
                                 <label for="qty" class="form-label fw-bold fs-4">Quantity</label>
@@ -195,13 +188,20 @@ include_once '../partials/header.php';
                                 <select class="form-control" style="height:60px" id="unit" name="unit">
                                     <option value="">Select Unit</option>
                                     <?php
-                                    foreach ($units as $unit):
+                                    // Fetch units securely
+                                    $stmt = $conn->prepare("SELECT UnitID, ShortWord FROM MeasurementUnits ORDER BY ShortWord ASC");
+                                    if ($stmt) {
+                                        $stmt->execute();
+                                        $result_units = $stmt->get_result();
+                                        while ($unit = $result_units->fetch_assoc()) {
+                                            $selected = ($row['Unit'] === $unit['ShortWord']) ? 'selected' : '';
+                                            echo '<option value="' . htmlspecialchars($unit['UnitID']) . '" ' . $selected . '>' . htmlspecialchars($unit['ShortWord']) . '</option>';
+                                        }
+                                        $stmt->close();
+                                    } else {
+                                        echo '<option value="">Error fetching units</option>';
+                                    }
                                     ?>
-                                        <option value="<?= htmlspecialchars($unit['UnitID']) ?>"
-                                            <?= isset($row['UnitID']) && $row['UnitID'] == $unit['UnitID'] ? 'selected' : '' ?>>
-                                            <?= htmlspecialchars($unit['ShortWord']) ?>
-                                        </option>
-                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -217,7 +217,7 @@ include_once '../partials/header.php';
                         <div class="col-12">
                             <div class="form-check form-switch d-flex align-items-center justify-content-center ms-3 mt-2"
                                 id="status-toggle"
-                                style="height: 100px;">
+                                style="height: 100px;display: none;">
                                 <input class="form-check-input me-3"
                                     type="checkbox"
                                     id="status"
@@ -248,7 +248,7 @@ include_once '../partials/header.php';
                                     <img src="<?= $image_path ?>"
                                         alt="<?= htmlspecialchars($row['ProductName'] ?? 'ImageFile') ?>"
                                         style="width:300px; height: 300px;" />
-                             
+
                                     <input type="file" id="img" name="img"
                                         accept="image/png, image/svg+xml" class="form-control mt-4">
 

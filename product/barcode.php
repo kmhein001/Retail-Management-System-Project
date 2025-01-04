@@ -4,7 +4,7 @@
     $result->data_seek(0);
     while ($row = $result->fetch_assoc()) {
     ?>
-        JsBarcode("#barcode_<?= $row['ProductID'] ?>", "<?= $row['Barcode'] ?>", {
+        JsBarcode("#barcode_<?= $row['ProductID'] ?>", "<?= $row['SKU'] ?>", {
             format: "CODE128",
             width: 1,
             height: 50,

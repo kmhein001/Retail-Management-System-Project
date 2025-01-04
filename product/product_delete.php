@@ -1,4 +1,4 @@
-\<?php
+<?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -25,8 +25,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] > 0) {
 
         // Delete the image file from the server
         if (!empty($img)) {
-            $image_path_svg = "../assets/img/brand/svg/" . $img;
-            $image_path_png = "../assets/img/brand/png/" . $img;
+            $image_path_svg = "../assets/img/product/svg/" . $img;
+            $image_path_png = "../assets/img/product/png/" . $img;
 
             // Check and delete the file in both possible locations
             if (file_exists($image_path_svg)) {

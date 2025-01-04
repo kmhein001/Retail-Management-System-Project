@@ -160,7 +160,7 @@ include_once '../partials/header.php';
                                                     ?>
                                                     <img src="<?= $image_path ?>"
                                                         alt="<?= isset($row['ProductName']) && !empty($row['ProductName']) ? $row['ProductName'] : $row['ImageFile'] ?>"
-                                                        style="max-width: 100%; height: auto;" />
+                                                        style="width: 60px; height: 60px;" />
                                                 </td>
                                                 <td class="align-middle text-center"><?= $row["SKU"] ?></td>
                                                 <td class="align-middle text-center">
@@ -175,7 +175,6 @@ include_once '../partials/header.php';
                                                 <td class="align-middle text-center"><?= $row["CreatedBy"] ?></td>
                                                 <td class="align-middle text-center">
                                                     <div class="form-check form-switch d-flex justify-content-center align-items-center">
-                                                        <!-- Toggle the checkbox value dynamically based on the current status -->
                                                         <input class="form-check-input status-toggle"
                                                             type="checkbox" data-product-id="<?= $row["ProductID"] ?>"
                                                             <?= ($row["Status"] == 'Active') ? 'checked' : '' ?>>
