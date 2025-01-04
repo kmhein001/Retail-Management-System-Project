@@ -33,24 +33,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Dynamically update the custom info badge using DataTable draw event
-        table.on('draw', function () {
-            const info = table.page.info(); // Get pagination info
-
-            if (info.recordsTotal === info.recordsDisplay) {
-                customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsTotal} entries`);
-            } else {
-                customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries (filtered from ${info.recordsTotal} total entries)`);
-            }
-        });
-
         // Trigger the initial info update
-        // const info = table.page.info();
-        // if (info.recordsTotal === info.recordsDisplay) {
-        //     customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsTotal} entries`);
-        // } else {
-        //     customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries (filtered from ${info.recordsTotal} total entries)`);
-        // }
+        const info = table.page.info();
+        if (info.recordsTotal === info.recordsDisplay) {
+            customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsTotal} entries`);
+        } else {
+            customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries (filtered from ${info.recordsTotal} total entries)`);
+        }
 
         // Custom search functionality
         $('#customSearch').on('keyup', function () {
