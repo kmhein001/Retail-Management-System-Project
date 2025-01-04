@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     try {
-      
+
         const table = $('#General_Auto_Table').DataTable({
             dom: "Brtip",
             buttons: [
@@ -28,29 +28,29 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         const customInfoButton = $('#General_Auto_Table_info button');
-if (!customInfoButton.length) {
-    console.error('Pagination info button not found.');
-    return;
-}
+        if (!customInfoButton.length) {
+            console.error('Pagination info button not found.');
+            return;
+        }
 
-// Dynamically update the custom info badge using DataTable draw event
-table.on('draw', function () {
-    const info = table.page.info(); // Get pagination info
+        // Dynamically update the custom info badge using DataTable draw event
+        table.on('draw', function () {
+            const info = table.page.info(); // Get pagination info
 
-    if (info.recordsTotal === info.recordsDisplay) {
-        customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsTotal} entries`);
-    } else {
-        customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries (filtered from ${info.recordsTotal} total entries)`);
-    }
-});
+            if (info.recordsTotal === info.recordsDisplay) {
+                customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsTotal} entries`);
+            } else {
+                customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries (filtered from ${info.recordsTotal} total entries)`);
+            }
+        });
 
-// Trigger the initial info update
-const info = table.page.info();
-if (info.recordsTotal === info.recordsDisplay) {
-    customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsTotal} entries`);
-} else {
-    customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries (filtered from ${info.recordsTotal} total entries)`);
-}
+        // Trigger the initial info update
+        // const info = table.page.info();
+        // if (info.recordsTotal === info.recordsDisplay) {
+        //     customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsTotal} entries`);
+        // } else {
+        //     customInfoButton.text(`Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries (filtered from ${info.recordsTotal} total entries)`);
+        // }
 
         // Custom search functionality
         $('#customSearch').on('keyup', function () {
