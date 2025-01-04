@@ -23,7 +23,7 @@
 <script src="../vendors/datatables.net/js/dataTables.min.js"></script>
 
 <!-- DataTables Buttons -->
-<!-- <script src="../js/buttons.dataTables.js" ></script> -->
+<script src="../js/buttons.dataTables.js" ></script>
 <script src="../js/dataTables.buttons.min.js" ></script>
 <script src="../vendors/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
 <script src="../js/buttons.html5.min.js"></script>
