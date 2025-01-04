@@ -150,7 +150,7 @@ include_once '../partials/header.php';
                                                     ?>
                                                     <img src="<?= $image_path ?>"
                                                         alt="<?= isset($row['CountryName']) && !empty($row['CountryName']) ? $row['CountryName'] : $row['Flag_Image'] ?>"
-                                                        style="max-width: 100%; height: auto;" />
+                                                        style="width: 100px; height: 80px;" />
                                                 </td>
                                                 <td class="align-middle text-center"><?= $row["Isd_Code"] ?></td>
                                                 <td class="align-middle text-center"><?= $row["Time_Zone"] ?></td>

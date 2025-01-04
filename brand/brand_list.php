@@ -147,7 +147,7 @@ include_once '../partials/header.php';
                                                     ?>
                                                     <img src="<?= $image_path ?>"
                                                         alt="<?= isset($row['BrandName']) && !empty($row['BrandName']) ? $row['BrandName'] : $row['ImageFile'] ?>"
-                                                        style="max-width: 100%; height: auto;" />
+                                                        style="width: 100px; height: 80px;" />
                                                 </td>
                                                 <td class="align-middle text-center"><?= $row["CountryName"] ?></td>
                                                 <td class="align-middle text-center"><?= $row["CreatedBy"] ?></td>
