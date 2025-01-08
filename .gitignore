@@ -1,10 +1,1 @@
 
-/.vscode
-.DS_Store
-countries/ajax_update_country.js
-/vendors
-/vendors
-*.map
-/node_modules
-*.php
-/state
