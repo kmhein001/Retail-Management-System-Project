@@ -1,8 +1,8 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
 include_once '../config/connect_db.php';
+include_once 'product.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 
@@ -23,7 +23,7 @@ if (isset($data['ids'], $data['status'])) {
     try {
 
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
-        $sql = "UPDATE Products SET Status = ? WHERE ProductID IN ($placeholders)";
+        $sql = "UPDATE $F_SQL SET Status = ? WHERE $SQL_1 IN ($placeholders)";
         
         $stmt = $conn->prepare($sql);
         if (!$stmt) {

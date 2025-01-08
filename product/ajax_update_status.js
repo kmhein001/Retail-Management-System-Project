@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Individual status toggle functionality
   document.querySelectorAll(".status-toggle").forEach(function (checkbox) {
     checkbox.addEventListener("change", function () {
-      const generalid = this.getAttribute("data-product-id");
+      const generalid = this.getAttribute("data-general-id");
       const newstatus = this.checked ? "Active" : "Inactive";
 
       
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then((response) => response.text())
         .then((result) => {
-          alert(result); // Display success/failure response
+          alert(result);
           if (result === "Status updated successfully") {
             console.log("Update Successful");
           }

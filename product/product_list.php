@@ -1,12 +1,10 @@
 <?php
 include_once '../partials/header.php';
+include_once 'product.php';
 ?>
-<li class="breadcrumb-item"><a href="<?= $base_url ?>/index.php" data-coreui-i18n="Dashboard">Dashboard</a>
-</li>
-<li class="breadcrumb-item"><a href="javascript:void(0);" data-coreui-i18n="Place">Product</a>
-</li>
-<li class="breadcrumb-item active"><a href="product_list.php" data-coreui-i18n="product List">Product list</a>
-</li>
+<li class="breadcrumb-item"><a href="<?= $base_url ?>/index.php" data-coreui-i18n="Dashboard">Dashboard</a> </li>
+<li class="breadcrumb-item"><a href="javascript:void(0);" data-coreui-i18n="<?= $C_general ?>"><?= $C_general ?></a></li>
+<li class="breadcrumb-item active"><a href="<?= $H_Title_Link_1 ?>" data-coreui-i18n="<?= $H_Title_1 ?>"><?= $H_Title_1 ?></a></li>
 </ol>
 </nav>
 </div>
@@ -16,10 +14,9 @@ include_once '../partials/header.php';
         <div class="card mb-4">
             <div class="card-header">
                 <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between">
-                    <!-- Card Title -->
                     <div>
-                        <h3 class="card-title my-3 fs-4 fs-md-3">Product List</h3>
-                        <h5 class="text-muted my-3 fs-6 fs-md-5">Manage your Product</h5>
+                        <h3 class="card-title my-3 fs-4 fs-md-3"><?= $H_Title_1 ?></h3>
+                        <h5 class="text-muted my-3 fs-6 fs-md-5"><?= $H_Title_D_1 ?></h5>
                     </div>
                 </div>
             </div>
@@ -28,109 +25,51 @@ include_once '../partials/header.php';
                     <div class="d-flex flex-wrap align-items-center justify-content-between">
                         <div class="col-md-6 col-12 mb-3 mb-md-0 d-flex justify-content-start">
                             <a class="btn btn-primary d-flex align-items-center justify-content-center align-middle"
-                                style="width: 250px; height: 60px; font-size: 18px;" href="product_add.php">
+                                style="width: 250px; height: 60px; font-size: 18px;"
+                                href="<?= $H_Title_Link_2 ?>">
                                 <svg class="icon me-4" style="width: 24px; height: 24px;">
                                     <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-plus"></use>
                                 </svg>
-                                <span>Add Product</span>
+                                <span><?= $H_Title_2 ?></span>
                             </a>
                         </div>
-
-
-                        <!-- Export Buttons Section -->
-                        <div class="col-md-6 col-12 d-flex justify-content-end">
-                            <ul class="list-unstyled d-flex flex-wrap align-items-center justify-content-end gap-3">
-                                <!-- Copy Button -->
-                                <li>
-                                    <a id="exportCopy" class="btn btn-outline-primary d-flex align-items-center justify-content-center align-middle"
-                                        style="width: 60px; height: 60px;">
-                                        <svg class="icon" style="width: 24px; height: 24px;">
-                                            <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-copy"></use>
-                                        </svg>
-                                    </a>
-                                </li>
-                                <!-- Export CSV Button -->
-                                <li>
-                                    <a id="exportCsv" class="btn btn-outline-primary d-flex align-items-center justify-content-center align-middle"
-                                        style="width: 60px; height: 60px;">
-                                        <svg class="icon" style="width: 24px; height: 24px;">
-                                            <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-cloud-download"></use>
-                                        </svg>
-                                    </a>
-                                </li>
-                                <!-- Export PDF Button -->
-                                <li>
-                                    <a id="exportPdf" class="btn btn-outline-primary d-flex align-items-center justify-content-center align-middle"
-                                        style="width: 60px; height: 60px;">
-                                        <svg class="icon" style="width: 24px; height: 24px;">
-                                            <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-file"></use>
-                                        </svg>
-                                    </a>
-                                </li>
-                                <!-- Export Excel Button -->
-                                <li>
-                                    <a id="exportExcel" class="btn btn-outline-primary d-flex align-items-center justify-content-center align-middle"
-                                        style="width: 60px; height: 60px;">
-                                        <svg class="icon" style="width: 24px; height: 24px;">
-                                            <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-spreadsheet"></use>
-                                        </svg>
-                                    </a>
-                                </li>
-                                <!-- Print Button -->
-                                <li>
-                                    <a id="exportPrint" class="btn btn-outline-primary d-flex align-items-center justify-content-center align-middle"
-                                        style="width: 60px; height: 60px;">
-                                        <svg class="icon" style="width: 24px; height: 24px;">
-                                            <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-print"></use>
-                                        </svg>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        <?php
+                        include_once '../partials/export_table.php';
+                        ?>
                     </div>
                 </div>
                 <div class="tab-content rounded-bottom">
                     <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1000">
-                        <div class="table-toolbar d-flex justify-content-between align-items-center mb-3">
-                            <!-- Custom Search Bar -->
-                            <div class="input-group">
-                                <input id="customSearch" type="text" class="form-control" placeholder="Search...">
-                                <button id="searchButton" class="btn btn-primary" type="button">
-                                    <svg class="icon">
-                                        <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-search"></use>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- Table container with default browser scroll -->
+                        <?php
+                        include_once '../partials/search_bar_table.php';
+                        ?>
                         <div class="table-container table-responsive my-2">
-
-
-
-
                             <?php
-                            $sql = "SELECT * FROM Products";
+                            $sql = "SELECT * FROM $F_SQL";
                             $result = $conn->query($sql);
+                            if (!$result) {
+                                die("Error fetching data: " . $conn->error);
+                            }
                             ?>
                             <form action="delete_multiple.php" method="POST" id="deleteForm">
                                 <table id="General_Auto_Table" class="table table-striped table-bordered border-warning my-4">
                                     <thead>
                                         <tr>
                                             <th class="text-center" id="checkboxColumn"><input type="checkbox" id="selectAllCheckbox"></th>
-                                            <th class="text-center">Id</th>
-                                            <th class="text-center">Product Name</th>
-                                            <th class="text-center">Image</th>
-                                            <th class="text-center">SKU</th>
-                                            <th class="text-center">Barcode</th>
-                                            <th class="text-center">BrandName</th>
-                                            <th class="text-center">CategoryName</th>
-                                            <th class="text-center">SubcategoryName</th>
-                                            <th class="text-center">Price</th>
-                                            <th class="text-center">Quantity</th>
-                                            <th class="text-center">Unit</th>
-                                            <th class="text-center">Created By</th>
-                                            <th class="text-center">Status</th>
-                                            <th class="text-center">Actions</th>
+                                            <th class="text-center"><?= $SQL_Title_1 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_2 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_3 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_4 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_4_1 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_5 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_6 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_7 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_8 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_9 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_10 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_11 ?></th>
+                                            <th class="text-center"><?= $SQL_Title_12 ?></th>
+                                            <th class="text-center"><?= $Title_13 ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -139,59 +78,63 @@ include_once '../partials/header.php';
                                         ?>
                                             <tr>
                                                 <td class="align-middle text-center">
-                                                    <input type="checkbox" name="selected_ids[]" value="<?= $row["ProductID"] ?>" class="rowCheckbox">
+                                                    <input type="checkbox" name="selected_ids[]" value="<?= $row[$SQL_1] ?>" class="rowCheckbox">
                                                 </td>
-                                                <td class="align-middle text-center"><?= $row["ProductID"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["ProductName"] ?></td>
+                                                <td class="align-middle text-center"><?= $row[$SQL_1] ?></td>
+                                                <td class="align-middle text-center"><?= $row[$SQL_2] ?></td>
                                                 <td class="align-middle text-center">
                                                     <?php
-                                                    // Get the file extension
-                                                    $file_extension = strtolower(pathinfo($row["ImageFile"], PATHINFO_EXTENSION));
-
-                                                    // Determine the correct directory based on the file extension
+                                                    $file_extension = strtolower(pathinfo($row[$SQL_3], PATHINFO_EXTENSION));
                                                     if ($file_extension === 'svg') {
-                                                        $image_path = "../assets/img/product/svg/" . $row["ImageFile"];
+                                                        $image_path = "../assets/img/" . $L_img . "svg/" . $row[$SQL_3];
                                                     } elseif ($file_extension === 'png') {
-                                                        $image_path = "../assets/img/product/png/" . $row["ImageFile"];
+                                                        $image_path = "../assets/img/" . $L_img . "png/" . $row[$SQL_3];
                                                     } else {
-                                                        // Fallback image or error handling
-                                                        $image_path = "../assets/img/product/default.png"; // Use a default image if the type is unknown
+                                                        $image_path = "../assets/img/" . $L_img . "default.png";
                                                     }
                                                     ?>
                                                     <img src="<?= $image_path ?>"
-                                                        alt="<?= isset($row['ProductName']) && !empty($row['ProductName']) ? $row['ProductName'] : $row['ImageFile'] ?>"
+                                                        alt="<?= isset($row[$SQL_2]) && !empty($row[$SQL_2]) ? $row[$SQL_2] : $row[$SQL_3] ?>"
                                                         style="width: 60px; height: 60px;" />
                                                 </td>
-                                                <td class="align-middle text-center"><?= $row["SKU"] ?></td>
+                                                <td class="align-middle text-center"><?= $row[$SQL_4] ?></td>
                                                 <td class="align-middle text-center">
-                                                    <svg id="barcode_<?= $row['ProductID'] ?>"></svg>
+                                                    <svg id="barcode_<?= $row[$SQL_1] ?>"></svg>
                                                 </td>
-                                                <td class="align-middle text-center"><?= $row["BrandName"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["CategoryName"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["SubcategoryName"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["Price"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["Quantity"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["Unit"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["CreatedBy"] ?></td>
+                                                <td class="align-middle text-center"><?= $row[$SQL_5] ?></td>
+                                                <td class="align-middle text-center"><?= $row[$SQL_6] ?></td>
+                                                <td class="align-middle text-center"><?= $row[$SQL_7] ?></td>
+                                                <td class="align-middle text-center"><?= $row[$SQL_8] ?></td>
+                                                <td class="align-middle text-center"><?= $row[$SQL_9] ?></td>
+                                                <td class="align-middle text-center"><?= $row[$SQL_10] ?></td>
+                                                <td class="align-middle text-center"><?= $row[$SQL_11] ?></td>
                                                 <td class="align-middle text-center">
                                                     <div class="form-check form-switch d-flex justify-content-center align-items-center">
                                                         <input class="form-check-input status-toggle"
-                                                            type="checkbox" data-product-id="<?= $row["ProductID"] ?>"
-                                                            <?= ($row["Status"] == 'Active') ? 'checked' : '' ?>>
+                                                            type="checkbox" data-general-id="<?= $row[$SQL_1] ?>"
+                                                            <?= ($row[$SQL_12] == 'Active') ? 'checked' : '' ?>>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <div class="btn-group d-flex flex-column flex-sm-row justify-content-center">
-                                                        <!-- Edit Icon -->
-                                                        <a class="btn btn-outline-info me-2 mb-2 mb-sm-0" href="product_edit.php?id=<?= $row['ProductID'] ?>">
+                                                        <!-- Magnifying Glass Icon (View) -->
+                                                        <a href="<?= $H_Title_Link_5 ?>?id=<?= $row[$SQL_1] ?>"
+                                                            class="btn btn-outline-success me-2 mb-2 mb-sm-0">
                                                             <svg class="icon" style="width:30px;height:30px;">
-                                                                <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-description"></use>
+                                                                <use xlink:href="<?= $V_C_I_S_free ?>#cil-magnifying-glass"></use>
                                                             </svg>
                                                         </a>
-                                                        <!-- Delete Icon -->
-                                                        <a href="product_delete.php?id=<?= $row['ProductID'] ?>" class="btn btn-outline-danger mb-2 mb-sm-0" onclick="return confirm(\'Are you sure you want to delete this product?\');">
+                                                        <a href="<?= $H_Title_Link_3 ?>?id=<?= $row[$SQL_1] ?>"
+                                                            class="btn btn-outline-info me-2 mb-2 mb-sm-0">
                                                             <svg class="icon" style="width:30px;height:30px;">
-                                                                <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
+                                                                <use xlink:href="<?= $V_C_I_S_free ?>#cil-description"></use>
+                                                            </svg>
+                                                        </a>
+                                                        <a href="<?= $H_Title_Link_4 ?>?id=<?= $row[$SQL_1] ?>"
+                                                            class="btn btn-outline-danger mb-2 mb-sm-0"
+                                                            onclick="return confirm(\'Are you sure you want to delete this <?= $C_general ?>?\');">
+                                                            <svg class="icon" style="width:30px;height:30px;">
+                                                                <use xlink:href="<?= $V_C_I_S_free ?>#cil-trash"></use>
                                                             </svg>
                                                         </a>
                                                     </div>
@@ -201,40 +144,10 @@ include_once '../partials/header.php';
                                         }
                                         ?>
                                     </tbody>
-                                    <?php
-                                    include_once 'barcode.php';
-                                    ?>
-                                    <script src="ajax_update_status.js"></script>
                                 </table>
-                                <div class="d-flex flex-column flex-md-row align-items-center justify-content-between mt-3">
-                                    <!-- Pagination Info -->
-                                    <div class="mb-2 mb-md-0">
-                                        <div id="General_Auto_Table_info" class="custom-info">
-                                            <button class="btn btn-primary badge fs-5 py-2 px-3 w-auto">
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Dropdown and Bulk Update Button -->
-                                    <div class="d-flex align-items-center gap-3">
-                                        <select id="bulkStatusSelect" class="form-select" style="width: auto;">
-                                            <option value="">Select Status</option>
-                                            <option value="Active">Active</option>
-                                            <option value="Inactive">Inactive</option>
-                                        </select>
-                                        <button id="bulkUpdateButton" class="btn btn-primary">
-                                            Update Status
-                                        </button>
-                                    </div>
-                                    <!-- Delete Selected Countries Button -->
-                                    <div>
-                                        <button type="submit" name="delete_selected" class="btn btn-danger custom-delete-btn">
-                                            <svg class="icon" style="width: 40px; height: 40px;">
-                                                <use xlink:href="../vendors/@coreui/icons/svg/free.svg#cil-trash"></use>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
+                                <?php
+                                include_once '../partials/bottom_table.php';
+                                ?>
                             </form>
                         </div>
 

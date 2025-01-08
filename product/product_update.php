@@ -3,39 +3,37 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
-include_once '../config/connect_db.php';
 
-// Function to sanitize input data
+include_once '../config/connect_db.php';
+include_once 'product.php';
+
 function sanitize_input($data)
 {
-    return htmlspecialchars(strip_tags(trim($data)));
+    return (strip_tags(trim($data)));
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve and sanitize form inputs
-    $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-    $name = isset($_POST['name']) ? sanitize_input($_POST['name']) : '';
-    $sku = isset($_POST['sku']) ? sanitize_input($_POST['sku']) : '';
-    $bname = isset($_POST['bname']) ? (int)$_POST['bname'] : 0;
-    $cname = isset($_POST['cname']) ? (int)$_POST['cname'] : 0;
-    $sname = isset($_POST['sname']) ? (int)$_POST['sname'] : 0;
-    $price = isset($_POST['price']) ? sanitize_input($_POST['price']) : '';
-    $qty = isset($_POST['qty']) ? (int)$_POST['qty'] : 0;
-    $unit = isset($_POST['unit']) ? (int)$_POST['unit'] : 0;
-    $cby = isset($_POST['cby']) ? sanitize_input($_POST['cby']) : '';
-    $status = isset($_POST['status']) ? 'Active' : 'Inactive';
 
-    // Validate required fields
+    $id = isset($_POST[$N_id]) ? (int)$_POST[$N_id] : 0;
+    $name = isset($_POST[$N_name]) ? sanitize_input($_POST[$N_name]) : '';
+    $sku = isset($_POST[$N_sku]) ? sanitize_input($_POST[$N_sku]) : '';
+    $bname = isset($_POST[$N_bname]) ? (int)$_POST[$N_bname] : 0;
+    $cname = isset($_POST[$N_cname]) ? (int)$_POST[$N_cname] : 0;
+    $sname = isset($_POST[$N_sname]) ? (int)$_POST[$N_sname] : 0;
+    $price = isset($_POST[$N_price]) ? sanitize_input($_POST[$N_price]) : '';
+    $qty = isset($_POST[$N_qty]) ? (int)$_POST[$N_qty] : 0;
+    $unit = isset($_POST[$N_unit]) ? (int)$_POST[$N_unit] : 0;
+    $cby = isset($_POST[$N_cby]) ? sanitize_input($_POST[$N_cby]) : '';
+    $status = isset($_POST[$N_status]) ? 'Active' : 'Inactive';
+
     if (empty($name) || empty($sku) || $bname === 0 || $cname === 0 || $sname === 0 || empty($price) || $unit === 0 || empty($cby)) {
-        header("Location: product_edit.php?id=" . urlencode($id) . "&error=Please fill in all required fields.");
+        header("Location:".$H_Title_Link_1."?id=" . urlencode($id) . "&error=Please fill in all required fields.");
         exit();
     }
 
-    // Fetch related names securely using prepared statements
-    // Fetch BrandName
-    $stmt = $conn->prepare("SELECT BrandName FROM Brands WHERE BrandID = ?");
+    $stmt = $conn->prepare("SELECT $SQL_T_Table_1_2 FROM $SQL_T_Table_1 WHERE $SQL_T_Table_1_1 = ?");
     if (!$stmt) {
-        header("Location: product_edit.php?id=" . urlencode($id) . "&error=Error preparing brand query.");
+        header("Location: ".$H_Title_Link_3."?id=" . urlencode($id) . "&error=Error preparing brand query.");
         exit();
     }
     $stmt->bind_param("i", $bname);
@@ -43,16 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result_brand = $stmt->get_result();
     if ($result_brand->num_rows === 0) {
         $stmt->close();
-        header("Location: product_edit.php?id=" . urlencode($id) . "&error=Selected brand does not exist.");
+        header("Location: ".$H_Title_Link_3."?id=" . urlencode($id) . "&error=Selected brand does not exist.");
         exit();
     }
-    $Bbname = $result_brand->fetch_assoc()['BrandName'];
+    $Bbname = $result_brand->fetch_assoc()[$SQL_T_Table_1_2];
     $stmt->close();
 
-    // Fetch CategoryName
-    $stmt = $conn->prepare("SELECT CategoryName FROM Category WHERE CategoryID = ?");
+    $stmt = $conn->prepare("SELECT $SQL_T_Table_2_2 FROM $SQL_T_Table_2 WHERE $SQL_T_Table_2_1 = ?");
     if (!$stmt) {
-        header("Location: product_edit.php?id=" . urlencode($id) . "&error=Error preparing category query.");
+        header("Location: ".$H_Title_Link_3."?id=" . urlencode($id) . "&error=Error preparing category query.");
         exit();
     }
     $stmt->bind_param("i", $cname);
@@ -60,16 +57,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result_category = $stmt->get_result();
     if ($result_category->num_rows === 0) {
         $stmt->close();
-        header("Location: product_edit.php?id=" . urlencode($id) . "&error=Selected category does not exist.");
+        header("Location: ".$H_Title_Link_3."?id=" . urlencode($id) . "&error=Selected category does not exist.");
         exit();
     }
-    $Ccname = $result_category->fetch_assoc()['CategoryName'];
+    $Ccname = $result_category->fetch_assoc()[$SQL_T_Table_2_2];
     $stmt->close();
 
-    // Fetch SubcategoryName
-    $stmt = $conn->prepare("SELECT SubcategoryName FROM Subcategory WHERE SubcategoryID = ?");
+    $stmt = $conn->prepare("SELECT $SQL_T_Table_3_2 FROM $SQL_T_Table_3 WHERE $SQL_T_Table_3_1 = ?");
     if (!$stmt) {
-        header("Location: product_edit.php?id=" . urlencode($id) . "&error=Error preparing subcategory query.");
+        header("Location: ".$H_Title_Link_3."?id=" . urlencode($id) . "&error=Error preparing subcategory query.");
         exit();
     }
     $stmt->bind_param("i", $sname);
@@ -77,16 +73,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result_subcategory = $stmt->get_result();
     if ($result_subcategory->num_rows === 0) {
         $stmt->close();
-        header("Location: product_edit.php?id=" . urlencode($id) . "&error=Selected subcategory does not exist.");
+        header("Location: ".$H_Title_Link_3."?id=" . urlencode($id) . "&error=Selected subcategory does not exist.");
         exit();
     }
-    $Ssname = $result_subcategory->fetch_assoc()['SubcategoryName'];
+    $Ssname = $result_subcategory->fetch_assoc()[$SQL_T_Table_3_2];
     $stmt->close();
 
-    // Fetch Unit ShortWord
-    $stmt = $conn->prepare("SELECT ShortWord FROM MeasurementUnits WHERE UnitID = ?");
+    $stmt = $conn->prepare("SELECT $SQL_T_Table_4_2 FROM $SQL_T_Table_4 WHERE $SQL_T_Table_4_1 = ?");
     if (!$stmt) {
-        header("Location: product_edit.php?id=" . urlencode($id) . "&error=Error preparing unit query.");
+        header("Location: ".$H_Title_Link_3."?id=" . urlencode($id) . "&error=Error preparing unit query.");
         exit();
     }
     $stmt->bind_param("i", $unit);
@@ -94,31 +89,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result_unit = $stmt->get_result();
     if ($result_unit->num_rows === 0) {
         $stmt->close();
-        header("Location: product_edit.php?id=" . urlencode($id) . "&error=Selected unit does not exist.");
+        header("Location: ".$H_Title_Link_3."?id=" . urlencode($id) . "&error=Selected unit does not exist.");
         exit();
     }
-    $Uunit = $result_unit->fetch_assoc()['ShortWord'];
+    $Uunit = $result_unit->fetch_assoc()[$SQL_T_Table_4_2];
     $stmt->close();
 
     $img = null;
-    // Handle file upload if a file is provided
-    if (isset($_FILES['ImageFile']) && $_FILES['ImageFile']['error'] === UPLOAD_ERR_OK) {
-        $file = $_FILES['ImageFile'];
+
+    if (isset($_FILES[$SQL_3]) && $_FILES[$SQL_3]['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES[$SQL_3];
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         $allowed_types = ['png', 'svg'];
 
         if (in_array($extension, $allowed_types)) {
-            // Use the original file name
+
             $original_name = basename($file['name']);
-            $upload_path = ($extension === 'svg') ? '../assets/img/product/svg/' : '../assets/img/product/png/';
+            $upload_path = ($extension === 'svg') ? '../assets/img/'.$L_img.'svg/' : '../assets/img/'.$L_img.'png/';
             $destination = $upload_path . $original_name;
 
-            // Check if the file already exists
             if (file_exists($destination)) {
                 die("Error: A file with the name '$original_name' already exists.");
             }
 
-            // Move the uploaded file
             if (move_uploaded_file($file['tmp_name'], $destination)) {
                 $img = $original_name;
             } else {
@@ -129,43 +122,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-     // Prepare SQL query
+    $table_name = $F_SQL;     
+    $column_id = $SQL_1;
+    $column_name = $SQL_2;
+    $column_img = $SQL_3;
+    $column_sku = $SQL_4;
+    $column_bname = $SQL_5;
+    $column_cname = $SQL_6;
+    $column_sname = $SQL_7;
+    $column_price = $SQL_8;
+    $column_qty = $SQL_9;
+    $column_unit = $SQL_10;
+    $column_cby = $SQL_11;
+    $column_status = $SQL_12;
+
      if ($img) {
-        $query = "UPDATE Products SET 
-                    ProductName = ?, 
-                    SKU = ?, 
-                    BrandName = ?, 
-                    CategoryName = ?, 
-                    SubcategoryName = ?, 
-                    Price = ?, 
-                    Quantity = ?, 
-                    Unit = ?, 
-                    CreatedBy = ?, 
-                    Status = ?, 
-                    ImageFile = ?
-                  WHERE ProductID = ?";
+        $query = "UPDATE  $table_name SET 
+                    $column_name = ?, 
+                    $column_sku= ?, 
+                    $column_bname = ?, 
+                    $column_cname = ?, 
+                    $column_sname = ?, 
+                    $column_price = ?, 
+                    $column_qty = ?, 
+                    $column_unit = ?, 
+                    $column_cby = ?, 
+                    $column_status = ?, 
+                    $column_img = ?
+                  WHERE $column_id = ?";
         $stmt = $conn->prepare($query);
         if (!$stmt) {
-            header("Location: product_edit.php?id=" . urlencode($id) . "&error=Error preparing update statement.");
+            header("Location: ".$H_Title_Link_3."?id=" . urlencode($id) . "&error=Error preparing update statement.");
             exit();
         }
         $stmt->bind_param("sssssssssssi", $name, $sku, $Bbname, $Ccname, $Ssname, $price, $qty, $Uunit, $cby, $status, $img, $id);
     } else {
-        $query = "UPDATE Products SET 
-                    ProductName = ?, 
-                    SKU = ?, 
-                    BrandName = ?, 
-                    CategoryName = ?, 
-                    SubcategoryName = ?, 
-                    Price = ?, 
-                    Quantity = ?, 
-                    Unit = ?, 
-                    CreatedBy = ?, 
-                    Status = ?
-                  WHERE ProductID = ?";
+        $query = "UPDATE  $table_name SET 
+                    $column_name = ?, 
+                    $column_sku= ?, 
+                    $column_bname = ?, 
+                    $column_cname = ?, 
+                    $column_sname = ?, 
+                    $column_price = ?, 
+                    $column_qty = ?, 
+                    $column_unit = ?, 
+                    $column_cby = ?, 
+                    $column_status = ?
+                  WHERE $column_id = ?";
         $stmt = $conn->prepare($query);
         if (!$stmt) {
-            header("Location: product_edit.php?id=" . urlencode($id) . "&error=Error preparing update statement.");
+            header("Location: ".$H_Title_Link_3."?id=" . urlencode($id) . "&error=Error preparing update statement.");
             exit();
         }
         $stmt->bind_param("ssssssssssi", $name, $sku, $Bbname, $Ccname, $Ssname, $price, $qty, $Uunit, $cby, $status, $id);
@@ -176,26 +182,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Set a success flash message
         $_SESSION['flash_message'] = [
             'type' => 'success',
-            'message' => 'Product updated successfully.'
+            'message' => $C_general.'updated successfully.'
         ];
-        header("Location: product_list.php");
+        header("Location: ".$H_Title_Link_1);
         exit();
     } else {
-        // Log the error internally and set an error flash message
-        error_log("Error updating product ID $id: " . $stmt->error);
+        error_log("Error updating" .$L_general ."ID $id: " . $stmt->error);
         $_SESSION['flash_message'] = [
             'type' => 'danger',
-            'message' => 'Failed to update the product. Please try again later.'
+            'message' => 'Failed to update the'.$L_general .'. Please try again later.'
         ];
-        header("Location: product_edit.php?id=" . urlencode($id));
+        header("Location: ".$H_Title_Link_3."?id=" . urlencode($id));
         exit();
     }
 
     $stmt->close();
     $conn->close();
 } else {
-    // If not a POST request, redirect back to the product list
-    header("Location: product_list.php");
+    header("Location: ".$H_Title_Link_1);
     exit();
 }
 ?>

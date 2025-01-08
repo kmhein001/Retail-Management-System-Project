@@ -6,3 +6,5 @@ countries/ajax_update_country.js
 /vendors
 *.map
 /node_modules
+*.php
+/state
